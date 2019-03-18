@@ -568,14 +568,55 @@ void DrawWolf (int x, int y, double size, int tail, int jaw, int eye, int nose, 
 
 void DrawBear ()
     {
+    //лапы
+    txSetColor     (RGB (64, 0, 0));
+    txSetFillColor (RGB (64, 0, 0));
+
+    txEllipse (345, 208, 385, 230);
+    txEllipse (415, 208, 455, 230);
+    txCircle  (355, 149, 12);
+    txCircle  (445, 149, 12);
+
+    //уши
+    txCircle (375, 70, 10);
+    txCircle (425, 70, 10);
+
     txSetColor     (RGB (98, 0, 0));
     txSetFillColor (RGB (98, 0, 0));
 
-    txCircle    (400, 100, 30);       // голова
-    txRectangle (367, 129, 433, 200); // туловище
+    //голова
+    txCircle  (400, 100, 30);
 
+    //туловище
+    txEllipse (360, 128, 440, 220);
+
+    txSetColor     (RGB (85, 0, 0));
+    txSetFillColor (RGB (85, 0, 0));
+    txEllipse (375, 138, 425, 210);
+
+    //морда
+    txSetColor     (RGB (64, 0, 0));
     txSetFillColor (RGB (64, 0, 0));
-    txCircle       (367, 129, 10);
+    txEllipse (380, 95, 420, 125);
+
+    //глаза
+    txSetColor     (RGB (0, 0, 128));
+    txSetFillColor (RGB (0, 0, 128));
+    txCircle (387, 93, 6);
+    txCircle (413, 93, 6);
+
+    txSetColor     (RGB (0, 0, 0));
+    txSetFillColor (RGB (0, 0, 0));
+    txCircle (387, 95, 4);
+    txCircle (413, 95, 4);
+
+    //нос
+    txEllipse (393, 98, 407, 108);
+
+    //губы
+    txSetColor     (RGB (155, 0, 0), 2);
+    txSetFillColor (RGB (155, 0, 0));
+    txArc (390, 100, 410, 117, 180, 180);
     }
 
 //-----------------------------------------------------------------------------
