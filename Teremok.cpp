@@ -12,15 +12,16 @@ void DrawBackground ();
 void DrawGrass_foundation (int x, int y, int move_x);
 void MoveGrass    (int move_x);
 void DrawSun      ();
-void DrawCloud    (int x, int y, double size = 1,   COLORREF cvetTucha = RGB (255, 255, 255));
-void DrawHouse    (int x, int y, double size = 1,   COLORREF lightWindow = RGB (255, 255, 185));
+void DrawCloud    (int x, int y, double size = 1, COLORREF cvetTucha = RGB (255, 255, 255));
+void DrawHouse       (int x, int y, double size = 1, COLORREF lightWindow = RGB (255, 255, 185));
+void DrawRuins_house (int x, int y, double size = 1, COLORREF lightWindow = RGB (255, 255, 185));
 void DrawMouse    (int x, int y, double size_x = 1, double size_y = 1, int tail = 0, int nose = 0, int mustache = 0, int head = 0, int eyeR = 0, int eyeL = 0, COLORREF bodyColor = RGB (204, 156, 130));
 void DrawFrog     (int x, int y, double size = 1,   int shoulderL = 0, int shoulderR = 0, int forearmL = 0, int forearmR = 0, int handL = 0, int handR = 0, int hipL = 0, int hipR = 0, int shinL = 0, int shinR = 0, int footL = 0, int footR = 0, int tummy = 0, int lips = 1, int eyeL = 0, int eyeR = 0);
 void DrawHeadFrog (int x, int y, double size = 1, int lips = 1, int eyeL = 0, int eyeR = 0);
 void DrawRabbit   (int x, int y, double size_x = 1, double size_y = 1, double earsL = 0, double earsR = 0, double nose = 0, double eye = 0, double mustache = 0, double paw = 0, double tail = 0, double legs = 0);
 void DrawFox      (int x, int y, double size_x = 1, double size_y = 1, int tail = 0, int ears = 0, int nose = 0, int eyes = 0);
-void DrawWolf     (int x, int y, double size = 1,   int tail = 0, int jaw = 0, int eye = 0, int nose = 0, int ears = 0);
-void DrawBear     (int x, int y, double size, int eyes = 0, int lips = 2, int paw_l = 0, int paw_r = 0);
+void DrawWolf     (int x, int y, double size_x = 1, double size_y = 1,   int tail = 0, int jaw = 0, int eye = 0, int nose = 0, int ears = 0);
+void DrawBear     (int x, int y, double size = 1, int eyes = 0, int lips = 2, int paw_l = 0, int paw_r = 0);
 void MoveCaptions_first  ();
 void MoveAuthor_speech   ();
 void MoveMouse_in_field  ();
@@ -39,6 +40,8 @@ void MoveWolf_in_field   ();
 void RechWolf            ();
 void MoveWolf_in_house   ();
 void MoveBear_in_field   ();
+void RechBear            ();
+void MoveBear_on_house   ();
 
 void MoveCaptions_end    ();
 
@@ -79,6 +82,8 @@ int main ()
     MoveWolf_in_house ();
 
     MoveBear_in_field ();
+    RechBear          ();
+    //MoveBear_on_house ();
 
     MoveCaptions_end ();
 
@@ -198,6 +203,46 @@ void DrawHouse (int x, int y, double size, COLORREF lightWindow)
 
     txSetFillColor (lightWindow);
     txCircle    (x + 100 * size, y - 186 * size, 15 * size);
+    txRectangle (x + 75 * size,  y - 80 * size,  x + 125 * size, y - 40 * size);
+    txLine      (x + 95 * size,  y - 80 * size,  x + 95 * size,  y - 40 * size);
+    txLine      (x + 95 * size,  y - 65 * size,  x + 75 * size,  y - 65 * size);
+    }
+
+//-----------------------------------------------------------------------------
+
+void DrawRuins_house (int x, int y, double size, COLORREF lightWindow)
+    {
+    txRectangle (x, y - 151 * size, x + 200 * size, y);
+    txSetFillColor (RGB(204, 156, 130));
+    txFloodFill (x + 60 * size, y - 120 * size);
+
+    txSetFillColor (RGB (183, 117, 81));
+    txSetColor     (RGB (183, 117, 81));
+    txCircle (x,               y - 140 * size,  12 * size);
+    txCircle (x,               y - 118 * size,  12 * size);
+    txCircle (x,               y - 96  * size,  12 * size);
+    txCircle (x,               y - 74  * size,  12 * size);
+    txCircle (x,               y - 52  * size,  12 * size);
+    txCircle (x,               y - 30  * size,  12 * size);
+    txCircle (x,               y - 8   * size,  12 * size);
+    txCircle (x + 200 * size,  y - 140 * size,  12 * size);
+    txCircle (x + 200 * size,  y - 118 * size,  12 * size);
+    txCircle (x + 200 * size,  y - 96  * size,  12 * size);
+    txCircle (x + 200 * size,  y - 74  * size,  12 * size);
+    txCircle (x + 200 * size,  y - 52  * size,  12 * size);
+    txCircle (x + 200 * size,  y - 30  * size,  12 * size);
+    txCircle (x + 200 * size,  y - 8   * size,  12 * size);
+
+
+    txSetFillColor (RGB (123, 77, 51));
+    POINT krisha[3] = {{x,                       y - ROUND (151 * size) + 70},
+                       {x + ROUND (200 * size),  y - ROUND (151 * size)},
+                       {x + ROUND (100 * size),  y - ROUND (221 * size)}};
+    txPolygon (krisha, 3);
+
+
+    txSetFillColor (lightWindow);
+    txEllipse (x + 100 * size + 15 * size, y - 186 * size + 15 * size, x + 100 * size - 15 * size, y - 186 * size - 10 * size);
     txRectangle (x + 75 * size,  y - 80 * size,  x + 125 * size, y - 40 * size);
     txLine      (x + 95 * size,  y - 80 * size,  x + 95 * size,  y - 40 * size);
     txLine      (x + 95 * size,  y - 65 * size,  x + 75 * size,  y - 65 * size);
@@ -503,70 +548,70 @@ void DrawCloud (int x, int y, double size, COLORREF cvetTucha)
 
 //-----------------------------------------------------------------------------
 
-void DrawWolf (int x, int y, double size, int tail, int jaw, int eye, int nose, int ears)
+void DrawWolf (int x, int y, double size_x, double size_y, int tail, int jaw, int eye, int nose, int ears)
     {
     // челюсть
     txSetColor     (RGB (128, 64, 0), 4);
-    txLine                 (x + 96  * size,          y - 73  * size,
-                            x + 125  * size,         y - 57  * size + jaw);
+    txLine                 (x + 96  * size_x,          y - 73  * size_y,
+                            x + 125  * size_x,         y - 57  * size_y + jaw);
     txSetColor     (RGB (255, 255, 255));
     txSetFillColor (RGB (255, 255, 255));
 
     txSetColor     (RGB (128, 64, 0));
     txSetFillColor (RGB (128, 64, 0));
 
-    txCircle    (x + 70 * size, y - 83 * size, 28 * size);                      // голова
-    txRectangle (x,             y - 56 * size, x + 73  * size, y - 20  * size); // туловище
-    txRectangle (x + 96 * size, y - 93 * size, x + 128 * size, y - 73  * size); // морда
+    txCircle    (x + 70 * size_x, y - 83 * size_y, 28 * size_x);                      // голова
+    txRectangle (x,               y - 56 * size_y, x + 73  * size_x, y - 20  * size_y); // туловище
+    txRectangle (x + 96 * size_x, y - 93 * size_y, x + 128 * size_x, y - 73  * size_y); // морда
 
 
-    POINT wolfEar_L[3] = {{x + ROUND (54  * size),        y - ROUND (106  * size)},
-                          {x + ROUND (61  * size),        y - ROUND (121  * size)},
-                          {x + ROUND (68  * size),        y - ROUND (111  * size)}};
+    POINT wolfEar_L[3] = {{x + ROUND (54  * size_x),        y - ROUND (106  * size_y)},
+                          {x + ROUND (61  * size_x),        y - ROUND (121  * size_y)},
+                          {x + ROUND (68  * size_x),        y - ROUND (111  * size_y)}};
     txPolygon (wolfEar_L, 3);
-    POINT wolfEar_R[3] = {{x + ROUND (70  * size) + ears, y - ROUND (107  * size)},
-                          {x + ROUND (78  * size) + ears, y - ROUND (121  * size)},
-                          {x + ROUND (85  * size) + ears, y - ROUND (106  * size)}};
+    POINT wolfEar_R[3] = {{x + ROUND (70  * size_x) + ears, y - ROUND (107  * size_y)},
+                          {x + ROUND (78  * size_x) + ears, y - ROUND (121  * size_y)},
+                          {x + ROUND (85  * size_x) + ears, y - ROUND (106  * size_y)}};
     txPolygon (wolfEar_R, 3);
 
 
-    POINT wolfPaw_L1[3] = {{x + ROUND (4   * size),       y - ROUND (23  * size)},
-                           {x,                            y},
-                           {x + ROUND (8   * size),       y}};
+    POINT wolfPaw_L1[3] = {{x + ROUND (4   * size_x),       y - ROUND (23  * size_y)},
+                           {x,                              y},
+                           {x + ROUND (8   * size_x),       y}};
     txPolygon (wolfPaw_L1, 3);
-    POINT wolfPaw_L2[3] = {{x + ROUND (14  * size),       y - ROUND (23  * size)},
-                           {x + ROUND (10  * size),       y},
-                           {x + ROUND (18  * size),       y}};
+    POINT wolfPaw_L2[3] = {{x + ROUND (14  * size_x),       y - ROUND (23  * size_y)},
+                           {x + ROUND (10  * size_x),       y},
+                           {x + ROUND (18  * size_x),       y}};
     txPolygon (wolfPaw_L2, 3);
-    POINT wolfPaw_R1[3] = {{x + ROUND (69  * size),       y - ROUND (23  * size)},
-                           {x + ROUND (65  * size),       y},
-                           {x + ROUND (73  * size),       y}};
+    POINT wolfPaw_R1[3] = {{x + ROUND (69  * size_x),       y - ROUND (23  * size_y)},
+                           {x + ROUND (65  * size_x),       y},
+                           {x + ROUND (73  * size_x),       y}};
     txPolygon (wolfPaw_R1, 3);
-    POINT wolfPaw_R2[3] = {{x + ROUND (59  * size),       y - ROUND (23  * size)},
-                           {x + ROUND (55  * size),       y},
-                           {x + ROUND (63  * size),       y}};
+    POINT wolfPaw_R2[3] = {{x + ROUND (59  * size_x),       y - ROUND (23  * size_y)},
+                           {x + ROUND (55  * size_x),       y},
+                           {x + ROUND (63  * size_x),       y}};
     txPolygon (wolfPaw_R2, 3);
 
 
-    POINT wolfTail[4] =    {{x + ROUND (3 * size),        y - ROUND (55  * size)},
-                            {x - ROUND (15  * size),      y - ROUND (75  * size) + tail},
-                            {x - ROUND (30  * size),      y - ROUND (83  * size) + tail},
-                            {x - ROUND (17  * size),      y - ROUND (67  * size) + tail}};
+    POINT wolfTail[4] =    {{x + ROUND (3   * size_x),      y - ROUND (55  * size_y)},
+                            {x - ROUND (15  * size_x),      y - ROUND (75  * size_y) + tail},
+                            {x - ROUND (30  * size_x),      y - ROUND (83  * size_y) + tail},
+                            {x - ROUND (17  * size_x),      y - ROUND (67  * size_y) + tail}};
     txPolygon (wolfTail, 4);
 
 
     // носик
     txSetColor     (RGB (64, 0, 0));
     txSetFillColor (RGB (64, 0, 0));
-    txCircle (x + 128  * size, y - 93  * size, 4  * size + nose);
+    txCircle (x + 128  * size_x, y - 93  * size_y, 4  * size_x + nose);
 
     // глазик
     txSetColor     (RGB (255, 255, 255));
     txSetFillColor (RGB (255, 255, 255));
-    txCircle (x + 80  * size,       y - 93  * size, 8  * size);
+    txCircle (x + 80  * size_x,       y - 93  * size_y, 8  * size_x);
     txSetColor     (RGB (0, 0, 128));
     txSetFillColor (RGB (0, 0, 128));
-    txCircle (x + 83  * size + eye, y - 93  * size, 5  * size);
+    txCircle (x + 83  * size_x + eye, y - 93  * size_y, 5  * size_x);
     }
 
 //-----------------------------------------------------------------------------
@@ -811,13 +856,6 @@ void MoveFrog_in_field ()
 
         if (t % 2 == 0) DrawFrog (6 * t, 650, 1,  0,   0, 0, 0, 0,  0, 0,  0,  0,  0,  0, 0,  0, 2, -2, -2);
         else            DrawFrog (6 * t, 670, 1, -10, -5, 3, 5, 5, -3, 10, 10, 10, 10, 7, 7, -3, 2,  0,  0);
-
-        // Второй вариант (вместо if), в данном случае менее удобный, менее читабельный:
-        //
-        //DrawFrog (6 * t, (650 - t % 15), 1, ((t % 2) * -10), ((t % 2) * -5), ((t % 2) * 3), ((t % 2) * 5),
-        //         ((t % 2) * 5), ((t % 2) * -3), ((t % 2) * 10), ((t % 2) * 10), ((t % 2) * 10),
-        //         ((t % 2) * 10), ((t % 2) * 7), ((t % 2) * 7), ((t % 2) * -3), 2, ((t % 2) * -2),
-        //         ((t % 2) * -2));
 
         DrawHouse (660, 690, 2.3, RGB (255, 255, 130));
 
@@ -1148,7 +1186,7 @@ void MoveWolf_in_field ()
         txTextOut (3 * t + 280,  40, "Прибежал Волчек - Серый бочок,");
         DrawCloud (3 * t + 1095, 100, 1, RGB (236, 236, 255));
 
-        DrawWolf (6 * t, 670, 1.5, ((t % 2) * -30), 0, 0, (t % 2) * 2);
+        DrawWolf (6 * t, 670, 1.5, 1.5, ((t % 2) * -30), 0, 0, (t % 2) * 2);
 
         DrawHouse (660, 690, 2.3, RGB (255, 255, 130));
 
@@ -1180,7 +1218,7 @@ void RechWolf ()
 
         DrawFox (525, 650, 1.5, 1.5, (t % 2) * 10, 0, (t % 2));
         DrawRabbit (420, 720, 1, 1, 0, 0, (t % 2), 0, ((t % 2) * 4));
-        DrawWolf (250, 655, 1.5, ((t % 2) * -30), ((t % 2) * -10));
+        DrawWolf (250, 655, 1.5, 1.5, ((t % 2) * -30), ((t % 2) * -10));
 
         DrawHouse (660, 690, 2.3, RGB (255, 255, 130));
 
@@ -1227,7 +1265,7 @@ void MoveWolf_in_house ()
         txTextOut (t + 300,  90,   "и стали они впятером жить");
         DrawCloud (t + 1020,  100,  1, RGB (236, 236, 255));
 
-        DrawWolf (7 * t + 250,  670, 1.5, ((t % 2) * -30), 0, 0, (t % 2) * 2);
+        DrawWolf (7 * t + 250,  670, 1.5, 1.5, ((t % 2) * -30), 0, 0, (t % 2) * 2);
 
         DrawHouse (660, 690, 2.3, RGB (255, 255, 130));
 
@@ -1258,8 +1296,9 @@ void MoveBear_in_field ()
         DrawSun ();
 
         DrawCloud (3 * t + 80,   100, 1.5);
-        txTextOut (3 * t + 280,  40, "Идёт по полю Мишка - Топтыжка,");
-        DrawCloud (3 * t + 1095, 100, 1, RGB (236, 236, 255));
+        txTextOut (3 * t + 280,  40,  "Идёт по полю Мишка - Топтыжка,");
+        txTextOut (3 * t + 300,  100, "Увидел теремок.");
+        DrawCloud (3 * t + 1115, 100, 1, RGB (236, 236, 255));
 
         DrawBear (6 * t, 670, 2, 4, 3, (t % 2)? 0:30, (t % 2)? 30:0);
 
@@ -1271,6 +1310,84 @@ void MoveBear_in_field ()
         }
     }
 
+//-----------------------------------------------------------------------------
+void RechBear ()
+    {
+    txSelectFont ("Comic Sans MS", 70);
+
+    int t = 0;
+
+    while (t < 120)
+        {
+        if (GetAsyncKeyState (VK_ESCAPE)) break;
+
+        Pause ();
+
+        txClear ();
+
+        DrawBackground ();
+        MoveGrass ((t % 2) * 5);
+        DrawSun ();
+
+        DrawWolf (555, 645, -1.5, 1.5, ((t % 2) * -30), ((t % 2) * -10));
+        DrawFox (540, 665, 1.5, 1.5, (t % 2) * 10, 0, (t % 2));
+        DrawRabbit (390, 725, 1, 1, 0, 0, (t % 2), 0, ((t % 2) * 4));
+        DrawBear (250, 655, 2, 4, (t % 2)? 3:5);
+
+        DrawHouse (660, 690, 2.3, RGB (255, 255, 130));
+
+        DrawCloud (t + 100,  100, 1.5);
+        txTextOut (t + 300,  10,   "и спрашивает: кто в тереме живёт?");
+        txTextOut (t + 300,  60,   "Я, Мышка - Норушка. Я Лягушка - Квакушка.");
+        txTextOut (t + 300,  110,  "Я Зайчик - Попрыгайчик. Я Лисичка - Сестричка.");
+        txTextOut (t + 300,  160,  "Я Волчек - Серый бочок. А ты кто?");
+        txTextOut (t + 300,  210,  "А я Мишка - Топтыжка, пустите меня в теремок!");
+        txTextOut (t + 300,  260,  "Ты Мишка слишком большой, не поместишься!");
+        txTextOut (t + 300,  310,  "А я на крыше буду жить! И полез мишка на крышу.");
+        DrawCloud (t + 1120, 100, 1, RGB (236, 236, 255));
+
+        DrawMouse (900, 647, -1, 1, 0, 0, ((t % 2) * -10));
+        DrawHeadFrog (840, 358, 0.7, ((t % 2) * 3), -2, -2);
+
+        t ++;
+
+        txSleep (Global_Sleep * 1.5);
+        }
+    }
+
+//-----------------------------------------------------------------------------
+void MoveBear_on_house ()
+    {
+    txSelectFont ("Comic Sans MS", 70);
+
+    int t = 0;
+
+    while (t < 70)
+        {
+        if (GetAsyncKeyState (VK_ESCAPE)) break;
+
+        Pause ();
+
+        txClear ();
+        DrawBackground ();
+        MoveGrass ((t % 2) * 5);
+        DrawSun ();
+
+        DrawCloud (t + 100,  100,  1.5);
+        txTextOut (t + 300,  40,   "Полез мишка на крышу,");
+        txTextOut (t + 300,  90,   "Теремок и развалился!");
+        DrawCloud (t + 1020,  100,  1, RGB (236, 236, 255));
+
+        DrawWolf (7 * t + 250,  670, 1.5, 1.5, ((t % 2) * -30), 0, 0, (t % 2) * 2);
+
+        DrawHouse (660, 690, 2.3, RGB (255, 255, 130));
+        DrawRuins_house (660, 690, 2.3);
+
+        t ++;
+
+        txSleep (Global_Sleep);
+        }
+    }
 //-----------------------------------------------------------------------------
 
 void MoveCaptions_end ()
